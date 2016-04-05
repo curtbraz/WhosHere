@@ -36,6 +36,11 @@ if ($result->num_rows > 0) {
 // SEND NOTIFICATION TO SLACK
 $cmd = "curl -X POST --data-urlencode 'payload={\"channel\": \"#general\", \"username\": \"WhosHere\", \"text\": \"".$row["Nickname"]." was just seen at ".$row["LastSeen"].".\", \"icon_emoji\": \":bell:\"}' https://hooks.slack.com/services/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";
 
+// UPDATES LastSeen FOR THIS ASSET
+$sql1 = "CALL UpdateSingleAsset(".$row["MAC"].";)";
+
+$result1 = $conn->query($sql1);
+
 exec($cmd);
 
 }
