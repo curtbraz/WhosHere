@@ -29,7 +29,7 @@ The management is made simple due to an HTML web table that reads the database a
 7) Visit http://[ip]/WhosHere/ in a browser and enjoy!
 
 #Other Thoughts
-I plan to move from MySQL to SQLite for performance reasons.  It works currently on the Raspberry Pi 3 but it's CPU hungry.  An Ubuntu VM or dedicated PC would be best so you could modify the cron scripts to report more frequently than the default 10-20 seconds it's set at currently.
+Performance is great on the Raspberry Pi, but that's because I truncate the log table frequently.  If you'd like to retain this data on more powerful hardware, modify the PurgeLogs() Stored Procedure or comment it out entirely.  The asset table still retains FirstSeen, LastSeen, and total count.
 
 If you have errors, take a look at the "run.py" script and modify the "iw" command to match the wireless lan adapter if it's not wlan0 and phy0 by default.  You may have issues with monitor mode on certain wifi dongles.  
 
