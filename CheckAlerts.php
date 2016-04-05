@@ -37,9 +37,18 @@ if ($result->num_rows > 0) {
 $cmd = "curl -X POST --data-urlencode 'payload={\"channel\": \"#general\", \"username\": \"WhosHere\", \"text\": \"".$row["Nickname"]." was just seen at ".$row["LastSeen"].".\", \"icon_emoji\": \":bell:\"}' https://hooks.slack.com/services/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";
 
 // UPDATES LastSeen FOR THIS ASSET
-$sql1 = "CALL UpdateSingleAsset(".$row["MAC"].";)";
+// Create connection
+$conn2 = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn2->connect_error) {
+    die("Connection failed: " . $conn2->connect_error);
+}
 
-$result1 = $conn->query($sql1);
+$sql1 = "CALL UpdateSingleAsset('".$row["MAC"]."');";
+
+$result1 = $conn2->query($sql1);
+
+$conn2->close();
 
 exec($cmd);
 
