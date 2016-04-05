@@ -1,8 +1,8 @@
-# WhosThere
+# WhosHere
 Notifies You of Chosen People in Your Vicinity via Their Wifi Probe Requests From an Simple Web GUI
 
 #Description
-The script is named after my dogs, because they proactively alert me before the doorbell rings.  I used to like to get them going crazy by saying, "Who's There?!". They cause a lot of noise when someone arrives, whether it's the pizza guy or a friend/family member coming over to visit.  It's not so fun now that I'm a dad because it wakes my sleeping baby up and that's no bueno for me.  I created this script to passively look for cell phone probe requests and alert me if certain visitors are in the area by sending a Slack push notification to my phone.  I typically get the alert before the visitor gets out of their vehicle thanks to a 9 dB antenna connected to a wifi dongle running on my Raspberry Pi.
+The script is named after my dogs, because they proactively alert me before the doorbell rings.  I used to like to get them going crazy by saying, "Who's Here?!". They cause a lot of noise when someone arrives, whether it's the pizza guy or a friend/family member coming over to visit.  It's not so fun now that I'm a dad because it wakes my sleeping baby up and that's no bueno for me.  I created this script to passively look for cell phone probe requests and alert me if certain visitors are in the area by sending a Slack push notification to my phone.  I typically get the alert before the visitor gets out of their vehicle thanks to a 9 dB antenna connected to a wifi dongle running on my Raspberry Pi.
 
 The management is made simple due to an HTML web table that reads the database and allows you to give friendly nicknames to MAC addresses.  There are also first and last seen timestamps that help you determine who someone is that visits, name them appropriately, and enable a notification checkbox to get real-time alerts next time they get close.  Probe Request tracking is nothing new but I'm not aware of something like this for personal use, especially something this easy to set up, interface with, and forget until you get an alert.
 
@@ -22,11 +22,11 @@ The management is made simple due to an HTML web table that reads the database a
 
 4) Create a Slack Channel, Download the Mobile App, Set up Push Notifications, and Sign up for the API (https://api.slack.com/incoming-webhooks#sending_messages)
 
-5) Edit "/var/www/html/WhosThere/CheckAlerts.php" to include Slack API Incoming Webhook Channel and URL Information
+5) Edit "/var/www/html/WhosHere/CheckAlerts.php" to include Slack API Incoming Webhook Channel and URL Information
 
 6) When finished launch "run.py". (preferably in Screen)
 
-7) Visit http://[ip]/WhosThere/ in a browser and enjoy!
+7) Visit http://[ip]/WhosHere/ in a browser and enjoy!
 
 #Other Thoughts
 I plan to move from MySQL to SQLite for performance reasons.  It works currently on the Raspberry Pi 3 but it's CPU hungry.  An Ubuntu VM or dedicated PC would be best so you could modify the cron scripts to report more frequently than the default 10-20 seconds it's set at currently.
