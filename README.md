@@ -18,7 +18,7 @@ The management is made simple due to an HTML web table that reads the database a
 
 2) You will be prompted to provide MySQL credentials twice as part of the mysql-server install.
 
-3) Modify "/var/www/html/WhosThere/dbconfig.php" and "run.py" to include your database credentials.
+3) Modify "/var/www/html/WhosHere/dbconfig.php" and "run.py" to include your database credentials.
 
 4) Create a Slack Channel, Download the Mobile App, Set up Push Notifications, and Sign up for the API (https://api.slack.com/incoming-webhooks#sending_messages)
 
