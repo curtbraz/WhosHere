@@ -201,7 +201,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateSingleAsset`(IN inMAC VARCHAR(100))
 BEGIN
-UPDATE assets SET LastSeen = NOW() WHERE MAC = inMAC;
+UPDATE assets SET LastSeen = NOW(),MinutesSince = 0 WHERE MAC = inMAC;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -237,4 +237,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-05 13:31:43
+-- Dump completed on 2016-04-05 13:38:20
