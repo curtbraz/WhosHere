@@ -1,0 +1,13 @@
+# SCRIPTS BELOW ARE FOR SENDING ALERTS EVERY 20 SECONDS (You may change based on performance)
+* * * * * php /var/www/html/WhosHere/CheckAlerts.php
+#* * * * * sleep 10; php /var/www/html/WhosHere/CheckAlerts.php
+* * * * * sleep 20; php /var/www/html/WhosHere/CheckAlerts.php
+#* * * * * sleep 30; php /var/www/html/WhosHere/CheckAlerts.php
+* * * * * sleep 40; php /var/www/html/WhosHere/CheckAlerts.php
+#* * * * * sleep 50; php /var/www/html/WhosHere/CheckAlerts.php
+
+# SCRIPT BELOW ADDS NEW ASSETS
+* * * * * php /var/www/html/WhosHere/CheckNewMacs.php
+
+# SCRIPT BELOW PERFORMS DATABASE MAINTENANCE (Daily @ 3)
+0 3 * * * php /var/www/html/WhosHere/DBMaintenance.php
