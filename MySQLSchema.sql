@@ -178,7 +178,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateAssetsLastSeen`()
 BEGIN
-   UPDATE assets AS ass
+UPDATE assets AS ass
 INNER JOIN (SELECT ass.MAC,MAX(lg.seen) AS LastSeen,TIMESTAMPDIFF(MINUTE,MAX(lg.seen),ass.LastSeen) * -1 AS MinutesSince, COUNT(ass.MAC) AS TimesSeen
 FROM assets ass
 INNER JOIN log lg
@@ -186,8 +186,10 @@ on ass.MAC = lg.MAC
 GROUP BY ass.MAC) AS iq ON iq.MAC = ass.MAC
 SET ass.LastSeen = iq.LastSeen,
 ass.MinutesSince = iq.MinutesSince,
-ass.TimesSeen = iq.TimesSeen;
-   END ;;
+ass.TimesSeen = ass.TimesSeen + iq.TimesSeen;
+
+TRUNCATE TABLE log;
+END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -222,4 +224,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-05  9:26:15
+-- Dump completed on 2016-04-05 11:18:52
