@@ -1,12 +1,8 @@
 <?php
 
-// EDIT YOUR SLACK INCOMING WEBHOOK API SETTINGS HERE.
-$slackchannel = '#general';
-$slackurl = 'https://hooks.slack.com/services/T000000/00000000/000000000000';
-
 require_once 'dbconfig.php';
 
-// Create MySQL Connection
+// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
 if ($conn->connect_error) {
@@ -29,14 +25,18 @@ if ($result->num_rows > 0) {
 
 //echo $row["Nickname"]." was just seen at ".$row["LastSeen"].".";
 
-// SEND NOTIFICATION TO SLACK.  
-$cmd = "curl -X POST --data-urlencode 'payload={\"channel\": \"".$slackchannel."\", \"username\": \"WhosHere\", \"text\": \"".$row["Nickname"]." was just seen at ".$row["LastSeen"].".\", \"icon_emoji\": \":bell:\"}' ".$slackurl;
+// SEND NOTIFICATION TO SLACK
+$cmd = "curl -X POST --data-urlencode 'payload={\"channel\": \"#general\", \"username\": \"WhosHere\", \"text\": \"".$row["Nickname"]." was just seen at ".$row["LastSeen"].".\", \"icon_emoji\": \":bell:\"}' https://hooks.slack.com/services/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";
 
 exec($cmd);
 
 }
 }
 
+// TRUNCATES LOG TABLE FOR PERFORMANCE REASONS
+$sql = "CALL PurgeLogs();";
+
+$result = $conn->query($sql);
 
 $conn->close();
 ?>

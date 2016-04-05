@@ -8,6 +8,3 @@
 
 # SCRIPT BELOW ADDS NEW ASSETS
 * * * * * php /var/www/html/WhosHere/CheckNewMacs.php
-
-# SCRIPT BELOW PERFORMS DATABASE MAINTENANCE (Daily @ 3)
-0 3 * * * php /var/www/html/WhosHere/DBMaintenance.php

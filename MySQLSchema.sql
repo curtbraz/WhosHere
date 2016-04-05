@@ -121,7 +121,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `PurgeLogs`()
 BEGIN
-DELETE FROM log WHERE seen <= DATE_SUB(now(), INTERVAL 7 DAY);
+TRUNCATE TABLE log;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -187,8 +187,6 @@ GROUP BY ass.MAC) AS iq ON iq.MAC = ass.MAC
 SET ass.LastSeen = iq.LastSeen,
 ass.MinutesSince = iq.MinutesSince,
 ass.TimesSeen = ass.TimesSeen + iq.TimesSeen;
-
-TRUNCATE TABLE log;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -224,4 +222,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-05 11:18:52
+-- Dump completed on 2016-04-05 11:31:04
