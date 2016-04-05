@@ -44,6 +44,8 @@ if(isset($_POST["Nickname"])){$Nickname = $_POST["Nickname"];}
 if(isset($_POST["Notify"])){$Notify = 1;}else{$Notify = 0;}
 if(isset($_POST["ShowMore"])){$ShowMore = $_POST["ShowMore"];}else{$ShowMore = "No";}
 
+$ShowMore=htmlspecialchars($ShowMore);
+
 require_once 'dbconfig.php';
 
 // Create connection
@@ -52,6 +54,10 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
+
+$Nickname = mysqli_real_escape_string($conn, $Nickname);
+$Notify = mysqli_real_escape_string($conn, $Notify);
+$asset = mysqli_real_escape_string($conn, $asset);
 
 if(isset($asset)){
 $sql = "CALL UpdateAssets('$Nickname','$Notify','$asset');";
@@ -80,6 +86,13 @@ $TimesSeen = $row["TimesSeen"];
 $FirstSeen = $row["FirstSeen"];
 $LastSeen = $row["LastSeen"];
 if($FirstSeen == "0000-00-00 00:00:00"){$FirstSeen = "";}
+
+$Nickname=htmlspecialchars($Nickname);
+$Notify=htmlspecialchars($Notify);
+$MAC=htmlspecialchars($MAC);
+$TimesSeen=htmlspecialchars($TimesSeen);
+$FirstSeen=htmlspecialchars($FirstSeen);
+$LastSeen=htmlspecialchars($LastSeen);
 
 ?>
 <TR><FORM METHOD="POST" ACTION="<?php echo $_SERVER['PHP_SELF']; ?>"><INPUT TYPE="hidden" NAME="asset" VALUE="<?php echo $MAC; ?>"><TD><INPUT TYPE="TEXT" NAME="Nickname" VALUE="<?php echo $Nickname; ?>"></TD><TD ALIGN="CENTER"><?php echo $TimesSeen; ?></TD><TD><?php echo $FirstSeen; ?></TD><TD><?php echo $LastSeen; ?></TD><TD ALIGN="CENTER"><INPUT TYPE="CHECKBOX" NAME="Notify" <?php if($Notify == 1){echo "checked";}else{echo "unchecked";}?>></TD><TD ALIGN="CENTER"><INPUT TYPE="SUBMIT" VALUE="Save"></TD></FORM></TR>

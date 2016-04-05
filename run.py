@@ -1,19 +1,17 @@
-## CHANGE DATABASE CONNECTION INFORMATION BELOW! 
-
 #Server Connection to MySQL:
 
 import MySQLdb
 conn = MySQLdb.connect(host= "localhost",
-                  user="USERNAME_GOES_HERE",
-                  passwd="PASSWORD_GOES_HERE",
+                  user="root",
+                  passwd="NX1126236bb",
                   db="WhosHere")
 x = conn.cursor()
 
 
-## SETS UP YOUR WLAN FOR MONITOR MODE.  YOU MAY NEED TO CHANGE "phy0" TO THE OUTPUT OF "iw list" FOR YOUR DEVICE THAT SUPPORTS MONITOR MODE!! 
+## SETS UP YOUR WLAN FOR MONITOR MODE.  YOU MAY NEED TO CHANGE "phy2" TO THE OUTPUT OF "iw list" FOR YOUR DEVICE THAT SUPPORTS MONITOR MODE!! 
 
 import subprocess
-MonMode = "sudo iw phy phy0 interface add mon0 type monitor && ifconfig mon0 up"
+MonMode = "sudo iw phy phy2 interface add mon0 type monitor && ifconfig mon0 up"
 import subprocess
 process = subprocess.Popen(MonMode.split(), stdout=subprocess.PIPE)
 output = process.communicate()[0]
@@ -35,7 +33,7 @@ for line in iter(proc.stdout.readline, ""):
 ## DUMPS MAC ADDRESSES FOR DEVICES INTO MySQL TABLE IN REAL-TIME VIA STDOUT
 
     try:
-       x.execute("""INSERT INTO log(MAC) VALUES (%s)""",(MAC))
+       x.execute("""CALL InsertMac(%s)""",(MAC))
        conn.commit()
     except:
        conn.rollback()
