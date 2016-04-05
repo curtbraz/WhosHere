@@ -16,7 +16,7 @@ $result = $conn->query($sql);
 
 
 // UPDATES LastSeen FOR ALL ASSETS
-$sql = "CALL UpdateAssetsLastSeen()";
+$sql = "CALL UpdateAssetsLastSeen();";
 
 $result = $conn->query($sql);
 
