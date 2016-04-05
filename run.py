@@ -1,9 +1,10 @@
 #Server Connection to MySQL:
 
+## MODIFY THE FOLLOWING MYSQL CREDENTIALS BELOW!
 import MySQLdb
 conn = MySQLdb.connect(host= "localhost",
-                  user="root",
-                  passwd="NX1126236bb",
+                  user="USERNAME_GOES_HERE",
+                  passwd="PASSWORD_GOES_HERE",
                   db="WhosHere")
 x = conn.cursor()
 
