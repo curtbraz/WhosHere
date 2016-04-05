@@ -9,15 +9,23 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-// UPDATES LastSeen FOR All Assets
+// ADDS NEW ASSETS NOT PREVIOUSLY SEEN
+$sql = "CALL AddAssets();";
+
+$result = $conn->query($sql);
+
+
+// UPDATES LastSeen FOR ALL ASSETS
 $sql = "CALL UpdateAssetsLastSeen()";
 
 $result = $conn->query($sql);
+
 
 // LOOKS FOR RECENT PROBES FOR ASSETS THAT HAVE A NOTIFICATION FLAG SET
 $sql = "CALL NotificationLogic();";
 
 $result = $conn->query($sql);
+
 
 if ($result->num_rows > 0) {
     // output data of each row

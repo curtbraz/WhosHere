@@ -1,10 +1,13 @@
-# SCRIPTS BELOW ARE FOR SENDING ALERTS EVERY 20 SECONDS (You may change based on performance)
+# SCRIPTS BELOW ARE FOR SENDING ALERTS EVERY 5 SECONDS
 * * * * * php /var/www/html/WhosHere/CheckAlerts.php
-#* * * * * sleep 10; php /var/www/html/WhosHere/CheckAlerts.php
+* * * * * sleep 5; php /var/www/html/WhosHere/CheckAlerts.php
+* * * * * sleep 10; php /var/www/html/WhosHere/CheckAlerts.php
+* * * * * sleep 15; php /var/www/html/WhosHere/CheckAlerts.php
 * * * * * sleep 20; php /var/www/html/WhosHere/CheckAlerts.php
-#* * * * * sleep 30; php /var/www/html/WhosHere/CheckAlerts.php
+* * * * * sleep 25; php /var/www/html/WhosHere/CheckAlerts.php
+* * * * * sleep 30; php /var/www/html/WhosHere/CheckAlerts.php
+* * * * * sleep 35; php /var/www/html/WhosHere/CheckAlerts.php
 * * * * * sleep 40; php /var/www/html/WhosHere/CheckAlerts.php
-#* * * * * sleep 50; php /var/www/html/WhosHere/CheckAlerts.php
-
-# SCRIPT BELOW ADDS NEW ASSETS
-* * * * * php /var/www/html/WhosHere/CheckNewMacs.php
+* * * * * sleep 45; php /var/www/html/WhosHere/CheckAlerts.php
+* * * * * sleep 50; php /var/www/html/WhosHere/CheckAlerts.php
+* * * * * sleep 55; php /var/www/html/WhosHere/CheckAlerts.php
