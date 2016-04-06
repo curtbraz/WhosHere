@@ -28,7 +28,6 @@ CREATE TABLE `assets` (
   `Notify` tinyint(1) NOT NULL DEFAULT '0',
   `FirstSeen` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `LastSeen` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `LastNotified` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `TimesSeen` int(11) NOT NULL DEFAULT '1',
   `MinutesSince` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
