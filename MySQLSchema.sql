@@ -30,7 +30,7 @@ CREATE TABLE `assets` (
   `LastSeen` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `TimesSeen` int(11) NOT NULL DEFAULT '0',
   `MinutesSince` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ DROP TABLE IF EXISTS `log`;
 CREATE TABLE `log` (
   `MAC` varchar(50) DEFAULT NULL,
   `seen` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -236,4 +236,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-06 23:44:57
+-- Dump completed on 2016-04-06 23:53:23
