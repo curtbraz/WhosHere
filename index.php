@@ -34,6 +34,15 @@ table.gridtable td {
 <H1>Who's Here!?</H1>
 <b><i>You Can Modify Names and Enable Notifications for Assets Below:</i></b>
 <br><br>
+<?php
+$output = shell_exec('systemctl status whoshere.service |grep "active (running)" | wc -l');
+if($output == 0)
+{
+echo "<font color=red><b>The Collector Service is NOT Running!</b></font><br>(run \"sudo systemctl start whoshere.service\" from the terminal)<br><br>";
+}
+else
+{echo "(<font color=green>The Collector Service is Running</font>)<br><br>";}
+?>
 <TABLE class="gridtable">
 <TR><TH>Name</TH><TH>Times Seen</TH><TH>First Seen</TH><TH>Last Seen</TH><TH>Notify</TH><TH>Update</TH></TR>
 
