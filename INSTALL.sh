@@ -16,7 +16,7 @@ sleep 5;
 
 sudo apt-get update;
 
-sudo apt-get install apache2 php5 mysql-client mysql-server-5.5 php5-mysqlnd python-mysqldb tshark sysvinit mysql-server -y;
+sudo apt-get install apache2 php5 mysql-client mysql-server-5.5 php5-mysqlnd python-mysqldb tshark mysql-server -y;
 
 
 
