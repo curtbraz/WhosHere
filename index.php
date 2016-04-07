@@ -31,7 +31,7 @@ table.gridtable td {
   </HEAD>
 <BODY>
 <CENTER>
-<H1>Who's Here!?</H1>
+<img src="whoshere-logo.png"><br>
 <b><i>You Can Modify Names and Enable Notifications for Assets Below:</i></b>
 <br><br>
 <?php

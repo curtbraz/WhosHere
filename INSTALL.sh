@@ -92,7 +92,7 @@ sed -i -e s/CHANNEL_GOES_HERE/$SlackChannel/g CheckAlerts.php;
 
 sudo service apache2 restart;
 
-sudo mkdir /var/www/html/WhosHere/ && sudo cp *.php /var/www/html/WhosHere/;
+sudo mkdir /var/www/html/WhosHere/ && sudo cp *.php /var/www/html/WhosHere/; && cp whoshere-logo.png /var/www/html/WhosHere/;
 
 
 ## MODIFIES MYSQL CONFIGURATION SETTINGS FOR LOWER PERFORMANCE MACHINES (Raspberry Pi)
