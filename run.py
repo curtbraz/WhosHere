@@ -1,22 +1,18 @@
 #Server Connection to MySQL:
 
-## MODIFY THE FOLLOWING MYSQL CREDENTIALS BELOW!
 import MySQLdb
 conn = MySQLdb.connect(host= "localhost",
-                  user="USERNAME_GOES_HERE",
+                  user="root",
                   passwd="PASSWORD_GOES_HERE",
                   db="WhosHere")
 x = conn.cursor()
 
 
-## SETS UP YOUR WLAN FOR MONITOR MODE.  YOU MAY NEED TO CHANGE "phy2" TO THE OUTPUT OF "iw list" FOR YOUR DEVICE THAT SUPPORTS MONITOR MODE!! 
+## SETS UP YOUR WLAN FOR MONITOR MODE.  YOU MAY NEED TO CHANGE TO THE OUTPUT OF "iw list" FOR YOUR DEVICE THAT SUPPORTS MONITOR MODE!! 
 
 import subprocess
-MonMode = "sudo iw phy phy2 interface add mon0 type monitor && ifconfig mon0 up"
-import subprocess
-process = subprocess.Popen(MonMode.split(), stdout=subprocess.PIPE)
-output = process.communicate()[0]
-
+MonMode1 = subprocess.Popen(['sudo','iw','phy','PHY_DEVICE_HERE','interface','add','mon0','type','monitor'],stdout=subprocess.PIPE)
+MonMode2 = subprocess.Popen(['sudo','ifconfig','mon0','up'],stdout=subprocess.PIPE)
 
 ## CALLS TSHARK AND FILTERS FOR PROBE REQUESTS
 

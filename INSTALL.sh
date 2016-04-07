@@ -1,10 +1,73 @@
 #!/bin/bash
 
+## WELCOME LANGUAGE
+
+echo "Installing.. You will be prompted to create a database password if setting up MySQL for this first time.";
+
+sleep 5;
+
+
 ## UPDATES AND INSTALLS REQUIRED PACKAGES FROM DEBIAN BASED DISTROS
 
 sudo apt-get update;
 
 sudo apt-get install apache2 php5 mysql-client mysql-server-5.5 php5-mysqlnd python-mysqldb tshark mysql-server -y;
+
+
+
+## SETS UP MONITORING WLAN INTERFACE
+
+Interfaces=`iw dev |grep "Interface" |cut -d " " -f 2 |grep -v "mon0"`
+InterfaceCount=`iw dev |grep "Interface" |grep -v "mon0" | wc -l`
+
+if [ $InterfaceCount -gt 1 ]
+then
+	echo "Which interface would you like to set up? The following wlan interfaces were detected: "$Interfaces
+	read SelectedInterface
+fi
+
+if [ $InterfaceCount -eq 1 ]
+then
+	SelectedInterface=`iw dev |grep "Interface" |cut -d " " -f 2 |grep -v "mon0"`
+fi
+
+if [ $InterfaceCount -eq 0 ]                                   
+then
+	echo "No wireless adapters were detected!  Please ensure the wireless adapter is set up and re-run the Install script."
+	exit 1
+fi
+
+if [ `iw dev |grep "Interface" |cut -d " " -f 2 |grep "mon0" | wc -l` -gt 0 ]
+then
+MonInterface=`iw dev |grep "Interface" |cut -d " " -f 2 |grep "mon0"`
+iw dev $MonInterface del
+fi
+
+PhyDev="`iw dev |grep "$SelectedInterface" -B 1 |grep phy | sed 's/#//g'`"
+
+PhyDevMonitorCheck="`iw "$PhyDev" info |grep monitor | wc -l`"
+
+if [ $PhyDevMonitorCheck -eq 0 ]                                   
+then
+        echo "Error! "$SelectedInterface" does not support monitor mode.  Is it possible the proper drivers are not installed for this Distribution or your wireless card simply does not support monitor mode?"
+        exit 1                
+fi
+
+
+sed -i -e s/PHY_DEVICE_HERE/$PhyDev/g run.py;
+
+
+
+
+## CONFIGURE CREDENTIALS
+
+echo "Please enter your MySQL password..";
+
+read MySQLPassword;
+
+sed -i -e s/PASSWORD_GOES_HERE/$MySQLPassword/g run.py;
+
+sed -i -e s/PASSWORD_GOES_HERE/$MySQLPassword/g dbconfig.py;
 
 
 ## SETS UP APACHE AND COPIES PHP WEB FILES
@@ -21,7 +84,7 @@ sudo cp my.cnf /etc/mysql/ && sudo service mysql restart;
 
 ## IMPORTS MySQL SCHEMA AND STORED PROCEDURES
 
-mysql -u root -p < MySQLSchema.sql;
+mysql -u root -p $MySQLPassword < MySQLSchema.sql;
 
 
 ## SETS UP CRON JOBS

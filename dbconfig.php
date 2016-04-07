@@ -3,7 +3,7 @@
 // UPDATE THESE TO REFLECT YOUR MySQL INSTANCE FROM INSTALLATION
 
 $servername = "127.0.0.1";
-$username = "USERNAME_GOES_HERE";
+$username = "root";
 $password = "PASSWORD_GOES_HERE";
 $dbname = "WhosHere";
 
