@@ -69,6 +69,19 @@ sed -i -e s/PASSWORD_GOES_HERE/$MySQLPassword/g run.py;
 
 sed -i -e s/PASSWORD_GOES_HERE/$MySQLPassword/g dbconfig.py;
 
+echo "This script uses the Slack chat application to send alerts.  You must register a free team with https://slack.com/create if you don't have one already.  Then, once signed in, you'll want to go to https://slack.com/apps/A0F7XDUAZ-incoming-webhooks in order to setup "Incoming Webhooks" and get your URL.  Once you have that please enter the information below.  You may also want to install the mobile app and configure push notifications for real-time alerting.";
+
+echo "What is your Slack URL? (Should look like https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX)"
+
+read SlackURL
+
+echo "What is your Slack Channel? (Default is #general)" 
+
+read SlackChannel
+
+sed -i -e s/URL_GOES_HERE/$SlackURL/g CheckAlerts.php;
+
+sed -i -e s/CHANNEL_GOES_HERE/$SlackChannel/g CheckAlerts.php;
 
 ## SETS UP APACHE AND COPIES PHP WEB FILES
 

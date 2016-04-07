@@ -1,5 +1,8 @@
 <?php
 
+$slackurl = 'URL_GOES_HERE';
+$slackchannel = 'CHANNEL_GOES_HERE';
+
 require_once 'dbconfig.php';
 
 // Create connection
@@ -34,7 +37,7 @@ if ($result->num_rows > 0) {
 //echo $row["Nickname"]." was just seen at ".$row["LastSeen"].".";
 
 // SEND NOTIFICATION TO SLACK
-$cmd = "curl -X POST --data-urlencode 'payload={\"channel\": \"#general\", \"username\": \"WhosHere\", \"text\": \"".$row["Nickname"]." was just seen at ".$row["LastSeen"].".\", \"icon_emoji\": \":bell:\"}' https://hooks.slack.com/services/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";
+$cmd = "curl -X POST --data-urlencode 'payload={\"channel\": \"".$slackchannel."\", \"username\": \"WhosHere\", \"text\": \"".$row["Nickname"]." was just seen at ".$row["LastSeen"].".\", \"icon_emoji\": \":bell:\"}' ".$slackurl;
 
 // UPDATES LastSeen FOR THIS ASSET
 // Create connection
