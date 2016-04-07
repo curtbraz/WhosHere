@@ -35,7 +35,7 @@ table.gridtable td {
 <b><i>You Can Modify Names and Enable Notifications for Assets Below:</i></b>
 <br><br>
 <TABLE class="gridtable">
-<TR><TH>Name</TH><TH>Times Seen (7 days)</TH><TH>First Seen</TH><TH>Last Seen</TH><TH>Notify</TH><TH>Update</TH></TR>
+<TR><TH>Name</TH><TH>Times Seen</TH><TH>First Seen</TH><TH>Last Seen</TH><TH>Notify</TH><TH>Update</TH></TR>
 
 <?php
 
