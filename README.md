@@ -14,22 +14,20 @@ The management is made simple due to an HTML web table that reads the database a
 3) A Dedicated Slack Channel Set Up with Mobile Push Notifications (or another method for alerting you)
 
 #Instructions
-1) Clone Repo Locally and run INSTALL.sh.
+1) Install WiFi card/adapter
 
-2) Create a Slack Channel, Download the Mobile App, Set up Push Notifications, and Sign up for the API (https://api.slack.com/incoming-webhooks#sending_messages)
+2) Clone Repo Locally (git clone https://github.com/curtbraz/WhosHere) and run INSTALL.sh
 
-3) Edit "/var/www/html/WhosHere/CheckAlerts.php" to include Slack API Incoming Webhook Channel and URL Information
+3) When finished launch "run.py". (preferably in Screen)
 
-4) When finished launch "run.py". (preferably in Screen)
-
-5) Visit http://[ip]/WhosHere/ in a browser and enjoy!
+4) Visit http://[ip]/WhosHere/ in a browser and enjoy!
 
 #Other Thoughts
-Performance is great on the Raspberry Pi, but that's because I truncate the log table frequently.  If you'd like to retain this data on more powerful hardware, modify the PurgeLogs() Stored Procedure or comment it out entirely.  The asset table still retains FirstSeen, LastSeen, and total count.
+Performance is great on my Raspberry Pi 3.  I haven't tested the install script on Ubuntu yet, but it should work just the same.  The new install script will set everything up for you, including configs and credentials.
 
-If you have errors, take a look at the "run.py" script and modify the "iw" command to match the wireless lan adapter if it's not wlan0 and phy0 by default.  You may have issues with monitor mode on certain wifi dongles.  
+If you have errors, you may have a wireless adapter installed that does not support monitor mode or you simply may not have the correct drivers installed.  
 
-I plan to add a lot more support for querying assets and managing notification types from the Web GUI.  I also want to improve performance and have more options for different OS's, so look for those changes soon!  I'd like to create an app for rooted Android OS's to make this mobile for when you're on the go and possibly centralized between users.  Imagine driving up to the parking lot of a building and knowing if someone was inside or not!  I also think it would be neat to hook into other API's for home automation to do things like turn on lights when you're approaching or interface with the garage door, thermostat, or speakers.  Enjoy and please let me know if you have any questions or feedback!  
+I plan to add a lot more support for querying assets and managing notification types from the Web GUI, in case you don't want to use just Slack.  I also want to improve compatibility for different OS's, so look for those changes soon!  I'd like to create an app for rooted mobile OS's to make this mobile for when you're on the go, all reporting to a centralized database where users can share information about MAC addresses.  Imagine driving up to the parking lot of a building and knowing if and who was inside!  I also think it would be neat to hook into other API's for home automation to do things like turn on lights when you're approaching or interface with the garage door, thermostat, or speakers.  Enjoy and please let me know if you have any questions or feedback!  
 
 
 <p align="center"><img align="center" width="500" alt="whoshere-screenshot" src="https://cloud.githubusercontent.com/assets/17833760/14305192/e6076f6a-fb87-11e5-95c7-29b2404f10aa.jpg"></p>
