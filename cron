@@ -11,3 +11,6 @@
 * * * * * sleep 45; php /var/www/html/WhosHere/CheckAlerts.php
 * * * * * sleep 50; php /var/www/html/WhosHere/CheckAlerts.php
 * * * * * sleep 55; php /var/www/html/WhosHere/CheckAlerts.php
+
+# SCRIPT BELOW PERFORMS DATABASE MAINTENANCE EVERY DAY @ 3
+0 3 * * * php /var/www/html/WhosHere/DBMaintenance.php
