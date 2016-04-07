@@ -16,17 +16,13 @@ The management is made simple due to an HTML web table that reads the database a
 #Instructions
 1) Clone Repo Locally and run INSTALL.sh.
 
-2) You will be prompted to provide MySQL credentials twice as part of the mysql-server install.
+2) Create a Slack Channel, Download the Mobile App, Set up Push Notifications, and Sign up for the API (https://api.slack.com/incoming-webhooks#sending_messages)
 
-3) Modify "/var/www/html/WhosHere/dbconfig.php" and "run.py" to include your database credentials.
+3) Edit "/var/www/html/WhosHere/CheckAlerts.php" to include Slack API Incoming Webhook Channel and URL Information
 
-4) Create a Slack Channel, Download the Mobile App, Set up Push Notifications, and Sign up for the API (https://api.slack.com/incoming-webhooks#sending_messages)
+4) When finished launch "run.py". (preferably in Screen)
 
-5) Edit "/var/www/html/WhosHere/CheckAlerts.php" to include Slack API Incoming Webhook Channel and URL Information
-
-6) When finished launch "run.py". (preferably in Screen)
-
-7) Visit http://[ip]/WhosHere/ in a browser and enjoy!
+5) Visit http://[ip]/WhosHere/ in a browser and enjoy!
 
 #Other Thoughts
 Performance is great on the Raspberry Pi, but that's because I truncate the log table frequently.  If you'd like to retain this data on more powerful hardware, modify the PurgeLogs() Stored Procedure or comment it out entirely.  The asset table still retains FirstSeen, LastSeen, and total count.
