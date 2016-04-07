@@ -34,10 +34,10 @@ if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
 
-//echo $row["Nickname"]." was just seen at ".$row["LastSeen"].".";
+$LastSeen = date('h:i:s A', strtotime($row["LastSeen"]));
 
 // SEND NOTIFICATION TO SLACK
-$cmd = "curl -X POST --data-urlencode 'payload={\"channel\": \"".$slackchannel."\", \"username\": \"WhosHere\", \"text\": \"".$row["Nickname"]." was just seen at ".$row["LastSeen"].".\", \"icon_emoji\": \":bell:\"}' ".$slackurl;
+$cmd = "curl -X POST --data-urlencode 'payload={\"channel\": \"".$slackchannel."\", \"username\": \"WhosHere\", \"text\": \"".$row["Nickname"]." was just seen at ".$LastSeen.".\", \"icon_emoji\": \":bell:\"}' ".$slackurl;
 
 // UPDATES LastSeen FOR THIS ASSET
 // Create connection

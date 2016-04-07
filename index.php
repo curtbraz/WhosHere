@@ -96,6 +96,9 @@ $FirstSeen = $row["FirstSeen"];
 $LastSeen = $row["LastSeen"];
 if($FirstSeen == "0000-00-00 00:00:00"){$FirstSeen = "";}
 
+$FirstSeen = date('m/d/Y h:i:s A', strtotime($FirstSeen));
+$LastSeen = date('m/d/Y h:i:s A', strtotime($LastSeen));
+
 $Nickname=htmlspecialchars($Nickname);
 $Notify=htmlspecialchars($Notify);
 $MAC=htmlspecialchars($MAC);
