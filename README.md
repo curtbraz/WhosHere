@@ -18,9 +18,7 @@ The management is made simple due to an HTML web table that reads the database a
 
 2) Clone Repo Locally (git clone https://github.com/curtbraz/WhosHere) and run INSTALL.sh
 
-3) When finished launch "run.py". (preferably in Screen)
-
-4) Visit http://[ip]/WhosHere/ in a browser and enjoy!
+3) Visit http://[ip]/WhosHere/ in a browser and enjoy!
 
 #Other Thoughts
 Performance is great on my Raspberry Pi 3.  I haven't tested the install script on Ubuntu yet, but it should work just the same.  The new install script will set everything up for you, including configs and credentials.
