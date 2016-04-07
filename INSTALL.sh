@@ -2,6 +2,11 @@
 
 ## WELCOME LANGUAGE
 
+if [ "$(id -u)" != "0" ]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
 echo "Installing.. You will be prompted to create a database password if setting up MySQL for the first time.";
 
 sleep 5;
@@ -11,7 +16,7 @@ sleep 5;
 
 sudo apt-get update;
 
-sudo apt-get install apache2 php5 mysql-client mysql-server-5.5 php5-mysqlnd python-mysqldb tshark mysql-server -y;
+sudo apt-get install apache2 php5 mysql-client mysql-server-5.5 php5-mysqlnd python-mysqldb tshark sysvinit mysql-server -y;
 
 
 
@@ -105,6 +110,21 @@ mysql -u root -p $MySQLPassword < MySQLSchema.sql;
 sudo crontab cron;
 
 
+## INSTALLS SYSTEMD SERVICE
+
+Path='`pwd`'
+
+sed -i -e s/CHANGEME/$Path/g whoshere.service;
+
+sudo cp whoshere.service /lib/systemd/system/whoshere.service;
+
+sudo systemctl daemon-reload
+
+sudo systemctl enable whoshere.service
+
+sudo systemctl start whoshere.service
+
+
 ## YOU'RE DONE!
 
-echo "Installation Complete.  Execute \"sudo python run.py\" in Screen and Visit \"http://localhost/WhosHere\" to Begin!";
+echo "Installation Complete!  Visit \"http://localhost/WhosHere\" to Begin!";

@@ -1,0 +1,10 @@
+[Unit]
+Description=Who's Here?!
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python CHANGEME/run.py
+
+[Install]
+WantedBy=multi-user.target
