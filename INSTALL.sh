@@ -2,7 +2,7 @@
 
 ## WELCOME LANGUAGE
 
-echo "Installing.. You will be prompted to create a database password if setting up MySQL for this first time.";
+echo "Installing.. You will be prompted to create a database password if setting up MySQL for the first time.";
 
 sleep 5;
 
