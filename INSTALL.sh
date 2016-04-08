@@ -16,7 +16,7 @@ sleep 5;
 
 sudo apt-get update;
 
-sudo apt-get install apache2 php5 mysql-client mysql-server-5.5 php5-mysqlnd python-mysqldb tshark mysql-server iw -y;
+sudo apt-get install apache2 php5 mysql-client mysql-server-5.5 php5-mysqlnd python-mysqldb tshark mysql-server -y;
 
 
 
@@ -59,7 +59,7 @@ then
 fi
 
 
-sed -i -e s/PHY_DEVICE_HERE/$PhyDev/g run.py;
+sed -i -e 's/PHY_DEVICE_HERE/'$PhyDev'/g' run.py;
 
 
 
@@ -70,9 +70,9 @@ echo "Please enter your MySQL password..";
 
 read MySQLPassword;
 
-sed -i -e s/PASSWORD_GOES_HERE/$MySQLPassword/g run.py;
+sed -i -e 's/PASSWORD_GOES_HERE/'$MySQLPassword'/g' run.py;
 
-sed -i -e s/PASSWORD_GOES_HERE/$MySQLPassword/g dbconfig.py;
+sed -i -e 's/PASSWORD_GOES_HERE/'$MySQLPassword'/g' dbconfig.py;
 
 echo "This script uses the Slack chat application to send alerts.  You must register a free team with https://slack.com/create if you don't have one already.  Then, once signed in, you'll want to go to https://slack.com/apps/A0F7XDUAZ-incoming-webhooks in order to setup "Incoming Webhooks" and get your URL.  Once you have that please enter the information below.  You may also want to install the mobile app and configure push notifications for real-time alerting.";
 
@@ -84,16 +84,17 @@ echo "What is your Slack Channel? (Default is #general)"
 
 read SlackChannel
 
-sed -i -e s/URL_GOES_HERE/$SlackURL/g CheckAlerts.php;
+sed -i -e 's/URL_GOES_HERE/'$SlackURL'/g' CheckAlerts.php;
 
-sed -i -e s/CHANNEL_GOES_HERE/$SlackChannel/g CheckAlerts.php;
+sed -i -e 's/CHANNEL_GOES_HERE/'$SlackChannel'/g' CheckAlerts.php;
 
 ## SETS UP APACHE AND COPIES PHP WEB FILES
 
 sudo service apache2 restart;
 
-sudo mkdir /var/www/html/WhosHere/ && sudo cp *.php /var/www/html/WhosHere/; && cp whoshere-logo.png /var/www/html/WhosHere/;
+mkdir /var/www/html/WhosHere/;
 
+cp *.php /var/www/html/WhosHere/ && cp whoshere-logo.png /var/www/html/WhosHere/;
 
 ## MODIFIES MYSQL CONFIGURATION SETTINGS FOR LOWER PERFORMANCE MACHINES (Raspberry Pi)
 
@@ -102,7 +103,7 @@ sudo cp my.cnf /etc/mysql/ && sudo service mysql restart;
 
 ## IMPORTS MySQL SCHEMA AND STORED PROCEDURES
 
-mysql -u root -p $MySQLPassword < MySQLSchema.sql;
+mysql -u root -p $MySQLPassword WhosHere < MySQLSchema.sql;
 
 
 ## SETS UP CRON JOBS
@@ -114,7 +115,7 @@ sudo crontab cron;
 
 Path='`pwd`'
 
-sed -i -e s/CHANGEME/$Path/g whoshere.service;
+sed -i -e 's/CHANGEME/'$Path'/g' whoshere.service;
 
 sudo cp whoshere.service /lib/systemd/system/whoshere.service;
 
