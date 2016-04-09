@@ -7,20 +7,32 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-echo "Installing.. You will be prompted to create a database password if setting up MySQL for the first time.";
+echo "Initiating Install..";
 
-sleep 5;
+sleep 2;
 
 
 ## UPDATES AND INSTALLS REQUIRED PACKAGES FROM DEBIAN BASED DISTROS
 
+echo "Updating Repositories..";
+
+sleep 2;
+
 sudo apt-get update;
+
+echo "Installing Required Packages.. You Will Have to Create a Database Password if Installing MySQL For the First Time..";
+
+sleep 2;
 
 sudo apt-get install apache2 php5 mysql-client mysql-server-5.5 php5-mysqlnd python-mysqldb tshark mysql-server -y;
 
 
 
 ## SETS UP MONITORING WLAN INTERFACE
+
+echo "Setting Up wlan Interface..  If you Haven't Already, Plug in Your WiFi Adapter Now and Hit Enter to Continue: ";
+
+read Wait;
 
 Interfaces=`iw dev |grep "Interface" |cut -d " " -f 2 |grep -v "mon0"`
 InterfaceCount=`iw dev |grep "Interface" |grep -v "mon0" | wc -l`
@@ -47,6 +59,10 @@ then
 MonInterface=`iw dev |grep "Interface" |cut -d " " -f 2 |grep "mon0"`
 iw dev $MonInterface del
 fi
+
+echo "Using Interface "$SelectedInterface"..";
+
+sleep 2;
 
 PhyDev="`iw dev |grep "$SelectedInterface" -B 1 |grep phy | sed 's/#//g'`"
 
@@ -90,6 +106,10 @@ sed -i -e 's/CHANNEL_GOES_HERE/'$SlackChannel'/g' CheckAlerts.php;
 
 ## SETS UP APACHE AND COPIES PHP WEB FILES
 
+echo "Setting Up the Web Server..";
+
+sleep 2;
+
 sudo service apache2 restart;
 
 DIRECTORY='/var/www/html/'
@@ -114,6 +134,10 @@ fi
 
 ## MODIFIES MYSQL CONFIGURATION SETTINGS FOR LOWER PERFORMANCE MACHINES (Raspberry Pi)
 
+echo "Configuring MySQL Server and WhosHere Database..";
+
+sleep 2;
+
 sudo cp my.cnf /etc/mysql/ && sudo service mysql restart;
 
 
@@ -123,6 +147,10 @@ mysql -u root -p $MySQLPassword WhosHere < MySQLSchema.sql;
 
 
 ## SETS UP CRON JOBS
+
+echo "Setting up Scheduled Cron Jobs and Autostart Background Services..";
+
+sleep 2;
 
 sudo crontab cron;
 
