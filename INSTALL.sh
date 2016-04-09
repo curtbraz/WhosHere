@@ -92,9 +92,25 @@ sed -i -e 's/CHANNEL_GOES_HERE/'$SlackChannel'/g' CheckAlerts.php;
 
 sudo service apache2 restart;
 
+DIRECTORY='/var/www/html/'
+
+if [ -d "$DIRECTORY" ]; then
+
 mkdir /var/www/html/WhosHere/;
 
 cp *.php /var/www/html/WhosHere/ && cp whoshere-logo.png /var/www/html/WhosHere/;
+
+fi
+
+if [ ! -d "$DIRECTORY" ]; then
+
+mkdir /var/www/WhosHere/;
+
+cp *.php /var/www/WhosHere/ && cp whoshere-logo.png /var/www/WhosHere/;
+
+sed -i -e 's/html\///g' cron;
+
+fi
 
 ## MODIFIES MYSQL CONFIGURATION SETTINGS FOR LOWER PERFORMANCE MACHINES (Raspberry Pi)
 
