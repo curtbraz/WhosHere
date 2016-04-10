@@ -38,7 +38,7 @@ table.gridtable td {
 $output = shell_exec('systemctl status whoshere.service |grep "active (running)" | wc -l');
 if($output == 0)
 {
-echo "<font color=red><b>The Collector Service is NOT Running!</b></font><br>(run \"sudo systemctl start whoshere.service\" from the terminal)<br><br>";
+echo "<font color=red><b>The Collector Service is NOT Running!</b></font><br>(run \"<b>sudo systemctl start whoshere.service</b>\" or \"<b>python run.py</b>\" if that fails)<br><br>";
 }
 else
 {echo "(<font color=green>The Collector Service is Running</font>)<br><br>";}
