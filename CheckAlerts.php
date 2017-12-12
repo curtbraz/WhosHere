@@ -1,7 +1,7 @@
 <?php
 
-$slackurl = 'URL_GOES_HERE';
-$slackchannel = 'CHANNEL_GOES_HERE';
+// For IFTTT Integration, Enter Incoming Webhook Here
+$webhook = 'https://maker.ifttt.com/trigger/WhosHere/with/key/IFTTT_WEBHOOK_GOES_HERE';
 
 require_once 'dbconfig.php';
 
@@ -10,7 +10,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
-} 
+}
 
 // ADDS NEW ASSETS NOT PREVIOUSLY SEEN
 $sql = "CALL AddAssets();";
@@ -37,7 +37,7 @@ if ($result->num_rows > 0) {
 $LastSeen = date('h:i:s A', strtotime($row["LastSeen"]));
 
 // SEND NOTIFICATION TO SLACK
-$cmd = "curl -X POST --data-urlencode 'payload={\"channel\": \"".$slackchannel."\", \"username\": \"WhosHere\", \"text\": \"".$row["Nickname"]." was just seen at ".$LastSeen.".\", \"icon_emoji\": \":bell:\"}' ".$slackurl;
+$cmd = "curl -X POST -H 'Content-type: application/json' --data '{\"value1\" : \"".$row["Nickname"]."\", \"value2\" : \"".$LastSeen."\"}' ".$webhook;
 
 // UPDATES LastSeen FOR THIS ASSET
 // Create connection
@@ -55,6 +55,8 @@ $conn2->close();
 
 exec($cmd);
 
+echo $cmd."\r\n";
+
 }
 }
 
@@ -63,9 +65,9 @@ $conn->close();
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
-if ($conn->connect_error) {  
+if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
-} 
+}
 
 // TRUNCATES LOG TABLE FOR PERFORMANCE REASONS
 $sql = "CALL PurgeLogs();";
@@ -74,4 +76,3 @@ $result = $conn->query($sql);
 
 $conn->close();
 ?>
-
