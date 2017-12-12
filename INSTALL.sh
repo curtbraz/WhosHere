@@ -24,7 +24,7 @@ echo "Installing Required Packages.. You Will Have to Create a Database Password
 
 sleep 2;
 
-sudo apt-get install apache2 php5 mysql-client mysql-server-5.5 php5-mysqlnd python-mysqldb tshark mysql-server -y;
+sudo apt-get install apache2 php5 mysql-client mysql-server-5.5 php5-mysqlnd python-mysqldb tshark mysql-server python3-pymysql -y;
 
 
 
@@ -90,19 +90,13 @@ sed -i -e 's/PASSWORD_GOES_HERE/'$MySQLPassword'/g' run.py;
 
 sed -i -e 's/PASSWORD_GOES_HERE/'$MySQLPassword'/g' dbconfig.py;
 
-echo "This script uses the Slack chat application to send alerts.  You must register a free team with https://slack.com/create if you don't have one already.  Then, once signed in, you'll want to go to https://slack.com/apps/A0F7XDUAZ-incoming-webhooks in order to setup "Incoming Webhooks" and get your URL.  Once you have that please enter the information below.  You may also want to install the mobile app and configure push notifications for real-time alerting.";
+echo "This script uses IFTTT.com (If Then Then That) Incoming Webhooks for Slack/SMS/etc Notifications/Automation";
 
-echo "What is your Slack URL? (Should look like https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX)"
+echo "What is your IFTTT.com Webhook URL? (Should look like https://maker.ifttt.com/trigger/WhosHere/with/key/IFTTT_WEBHOOK_GOES_HERE)"
 
-read SlackURL
+read webhook
 
-echo "What is your Slack Channel? (Default is #general)" 
-
-read SlackChannel
-
-sed -i -e 's/URL_GOES_HERE/'$SlackURL'/g' CheckAlerts.php;
-
-sed -i -e 's/CHANNEL_GOES_HERE/'$SlackChannel'/g' CheckAlerts.php;
+sed -i -e 's/IFTTT_WEBHOOK_GOES_HERE/'$webhook'/g' CheckAlerts.php;
 
 ## SETS UP APACHE AND COPIES PHP WEB FILES
 
