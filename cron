@@ -1,3 +1,5 @@
+
+# WhosHere SCRIPTS BELOW
 # SCRIPTS BELOW ARE FOR SENDING ALERTS EVERY 5 SECONDS
 * * * * * php /var/www/html/WhosHere/CheckAlerts.php
 * * * * * sleep 5; php /var/www/html/WhosHere/CheckAlerts.php
