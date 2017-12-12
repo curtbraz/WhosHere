@@ -146,6 +146,8 @@ echo "Setting up Scheduled Cron Jobs and Autostart Background Services..";
 
 sleep 2;
 
+crontab -l >> cron;
+
 sudo crontab cron;
 
 
