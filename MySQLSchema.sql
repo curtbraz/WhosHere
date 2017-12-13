@@ -46,7 +46,8 @@ CREATE TABLE `assets` (
   `TimesSeen` int(11) NOT NULL DEFAULT '0',
   `MinutesSince` int(11) NOT NULL DEFAULT '0',
   `SignalStrength` varchar(45) DEFAULT NULL,
-  `DBTreshold` int(11) NOT NULL DEFAULT '-100'
+  `DBTreshold` int(11) NOT NULL DEFAULT '-100',
+  `NotifiedRecently` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
