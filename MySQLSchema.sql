@@ -45,7 +45,8 @@ CREATE TABLE `assets` (
   `LastSeen` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `TimesSeen` int(11) NOT NULL DEFAULT '0',
   `MinutesSince` int(11) NOT NULL DEFAULT '0',
-  `SignalStrength` varchar(45) DEFAULT NULL
+  `SignalStrength` varchar(45) DEFAULT NULL,
+  `DBTreshold` int(11) NOT NULL DEFAULT '-100'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -156,11 +157,11 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `NotificationLogic`()
 BEGIN
-SELECT DISTINCT Nickname,LastSeen,MAC FROM assets ass WHERE Notify = 1 AND LastSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND MinutesSince > 60;
+SELECT DISTINCT Nickname,LastSeen,MAC FROM assets ass WHERE Notify = 1 AND LastSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND MinutesSince > 60 AND SignalStrength >= DBTreshold;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -299,4 +300,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-12 23:36:01
+-- Dump completed on 2017-12-13 13:07:02
