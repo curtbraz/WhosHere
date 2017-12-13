@@ -214,11 +214,11 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateAssets`(IN name VARCHAR(100), IN flag boolean, IN asset VARCHAR(100))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateAssets`(IN name VARCHAR(100), IN flag boolean, IN asset VARCHAR(100), IN signaltreshold INT)
 BEGIN
-UPDATE assets SET Nickname = name, Notify = flag WHERE MAC = asset;
+UPDATE assets SET Nickname = name, Notify = flag, DBTreshold =  signaltreshold WHERE MAC = asset;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -300,4 +300,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-13 13:07:02
+-- Dump completed on 2017-12-13 13:31:10
