@@ -161,7 +161,15 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `NotificationLogic`()
 BEGIN
+
 SELECT DISTINCT Nickname,LastSeen,MAC FROM assets ass WHERE Notify = 1 AND LastSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND MinutesSince > 60 AND SignalStrength >= DBTreshold;
+
+IF  EXISTS (SELECT * FROM config WHERE Name = 'NotifyNewlyDiscovered' AND Value = 'true') THEN
+
+    SELECT DISTINCT Nickname,LastSeen,MAC FROM assets ass WHERE LastSeen = FirstSeen;
+
+END IF;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -300,4 +308,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-13 13:31:10
+-- Dump completed on 2017-12-13 14:40:10
