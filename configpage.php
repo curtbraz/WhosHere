@@ -78,6 +78,13 @@ $Value = $row["Value"];
 $Value=htmlspecialchars($Value);
 $Name=htmlspecialchars($Name);
 
+if($Name == "DefaultNotifyTreshold"){
+
+$sql3 = "ALTER TABLE assets MODIFY COLUMN DBTreshold INT NOT NULL DEFAULT '$Value';";
+$result3 = $conn->query($sql3);
+
+}
+
 ?>
 <TR><FORM METHOD="POST" ACTION="<?php echo $_SERVER['PHP_SELF']; ?>"><TR><TD ALIGN="CENTER"><INPUT TYPE="HIDDEN" NAME="Name" VALUE="<?php echo $Name; ?>"><?php echo $Name; ?></TD><TD><INPUT TYPE="TEXT" NAME="Value" VALUE="<?php echo $Value; ?>"></TD><TD ALIGN="CENTER"><INPUT TYPE="SUBMIT" VALUE="Save"></TD></FORM></TR>
 
