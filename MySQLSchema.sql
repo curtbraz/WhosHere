@@ -181,7 +181,7 @@ SELECT DISTINCT Nickname,LastSeen,MAC FROM assets ass WHERE Notify = 1 AND LastS
 
 IF  EXISTS (SELECT * FROM config WHERE Name = 'NotifyNewlyDiscovered' AND Value = 'true') THEN
 
-    SELECT DISTINCT Nickname,LastSeen,MAC FROM assets ass WHERE LastSeen = FirstSeen AND LastSeen > DATE_SUB(now(), INTERVAL 5 MINUTE);
+    SELECT DISTINCT Nickname,LastSeen,MAC FROM assets ass WHERE LastSeen = FirstSeen AND LastSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND SignalStrength >= DBTreshold;
 
 END IF;
 
