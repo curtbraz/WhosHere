@@ -33,7 +33,10 @@ table.gridtable td {
 <CENTER>
 <img src="whoshere-logo.png"><br>
 <b><i>You Can Modify Names and Enable Notifications for Assets Below:</i></b>
-<br><br>
+<p align="center">
+<a href="configpage.php" TARGET="_BLANK">Options</a>
+</p>
+
 <?php
 $output = shell_exec('systemctl status whoshere.service |grep "active (running)" | wc -l');
 if($output == 0)
