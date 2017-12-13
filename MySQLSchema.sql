@@ -177,12 +177,14 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `NotificationLogic`()
 BEGIN
 
-IF  EXISTS (SELECT DISTINCT Nickname,LastSeen,MAC FROM assets ass WHERE Notify = 1 AND LastSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND MinutesSince > 60 AND SignalStrength >= DBTreshold) THEN
-	SELECT DISTINCT Nickname,LastSeen,MAC FROM assets ass WHERE Notify = 1 AND LastSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND MinutesSince > 60 AND SignalStrength >= DBTreshold;
+IF  EXISTS (SELECT DISTINCT Nickname,LastSeen,MAC FROM assets ass WHERE Notify = 1 AND LastSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND MinutesSince > 60 AND SignalStrength >= DBTreshold AND NotifiedRecently = 0) THEN
+	SELECT DISTINCT Nickname,LastSeen,MAC FROM assets ass WHERE Notify = 1 AND LastSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND MinutesSince > 60 AND SignalStrength >= DBTreshold AND NotifiedRecently = 0;
+	UPDATE assets SET NotifiedRecently = 1 WHERE Notify = 1 AND LastSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND MinutesSince > 60 AND SignalStrength >= DBTreshold AND NotifiedRecently = 0;
 END IF;
 
 IF  EXISTS (SELECT * FROM config WHERE Name = 'NotifyNewlyDiscovered' AND Value = 'true') THEN
-    SELECT DISTINCT Nickname,LastSeen,MAC FROM assets ass WHERE TimesSeen < 10 AND SignalStrength >= DBTreshold AND FirstSeen > DATE_SUB(now(), INTERVAL 5 MINUTE);
+    SELECT DISTINCT Nickname,LastSeen,MAC FROM assets ass WHERE FirstSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND SignalStrength >= DBTreshold AND NotifiedRecently = 0;
+	UPDATE assets SET NotifiedRecently = 1 WHERE FirstSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND SignalStrength >= DBTreshold AND NotifiedRecently = 0;
 END IF;
 
 END ;;
