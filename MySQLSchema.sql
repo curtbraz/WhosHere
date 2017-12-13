@@ -289,6 +289,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateSingleAsset`(IN inMAC VARCHAR(100))
 BEGIN
+UPDATE assets SET NotifiedRecently = 0 WHERE MinutesSince >= 60;
 UPDATE assets SET LastSeen = NOW(),MinutesSince = 0 WHERE MAC = inMAC;
 END ;;
 DELIMITER ;
