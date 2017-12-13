@@ -108,7 +108,7 @@ $FirstSeen=htmlspecialchars($FirstSeen);
 $LastSeen=htmlspecialchars($LastSeen);
 
 ?>
-<TR><FORM METHOD="POST" ACTION="<?php echo $_SERVER['PHP_SELF']; ?>"><INPUT TYPE="hidden" NAME="asset" VALUE="<?php echo $MAC; ?>"><TD><INPUT TYPE="TEXT" NAME="Nickname" VALUE="<?php echo $Nickname; ?>"></TD><TD ALIGN="CENTER"><A HREF="assetinfo.php?MAC=<?php echo $MAC; ?>" TARGET="_BLANK"><?php echo $TimesSeen; ?></a></TD><TD><?php echo $FirstSeen; ?></TD><TD><?php echo $LastSeen; ?></TD><TD><?php echo $SignalStrength; ?></TD><TD ALIGN="CENTER"><INPUT TYPE="CHECKBOX" NAME="Notify" <?php if($Notify == 1){echo "checked";}else{echo "unchecked";}?>></TD><TD ALIGN="CENTER"><INPUT TYPE="SUBMIT" VALUE="Save"></TD></FORM></TR>
+<TR><FORM METHOD="POST" ACTION="<?php echo $_SERVER['PHP_SELF']; ?>"><INPUT TYPE="hidden" NAME="asset" VALUE="<?php echo $MAC; ?>"><TD><INPUT TYPE="TEXT" NAME="Nickname" VALUE="<?php echo $Nickname; ?>"></TD><TD ALIGN="CENTER"><A HREF="assetinfo.php?MAC=<?php echo $MAC; ?>" TARGET="_BLANK"><?php echo $TimesSeen; ?></a></TD><TD><?php echo $FirstSeen; ?></TD><TD><?php echo $LastSeen; ?></TD><TD ALIGN="CENTER"><?php echo $SignalStrength; ?></TD><TD ALIGN="CENTER"><INPUT TYPE="CHECKBOX" NAME="Notify" <?php if($Notify == 1){echo "checked";}else{echo "unchecked";}?>></TD><TD ALIGN="CENTER"><INPUT TYPE="SUBMIT" VALUE="Save"></TD></FORM></TR>
 
 <?php
     }
