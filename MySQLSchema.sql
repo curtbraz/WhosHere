@@ -1,8 +1,10 @@
--- MySQL dump 10.13  Distrib 5.5.44, for debian-linux-gnu (armv7l)
+CREATE DATABASE  IF NOT EXISTS `WhosHere` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `WhosHere`;
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: WhosHere
 -- ------------------------------------------------------
--- Server version	5.5.44-0+deb8u1
+-- Server version	5.5.5-10.1.23-MariaDB-9+deb9u1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,6 +16,19 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `SSIDs`
+--
+
+DROP TABLE IF EXISTS `SSIDs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `SSIDs` (
+  `MAC` varchar(1000) DEFAULT NULL,
+  `SSID` varchar(1000) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `assets`
@@ -29,8 +44,22 @@ CREATE TABLE `assets` (
   `FirstSeen` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `LastSeen` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `TimesSeen` int(11) NOT NULL DEFAULT '0',
-  `MinutesSince` int(11) NOT NULL DEFAULT '0'
+  `MinutesSince` int(11) NOT NULL DEFAULT '0',
+  `SignalStrength` varchar(45) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `config`
+--
+
+DROP TABLE IF EXISTS `config`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `config` (
+  `Name` varchar(100) DEFAULT NULL,
+  `Value` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,9 +71,15 @@ DROP TABLE IF EXISTS `log`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `log` (
   `MAC` varchar(50) DEFAULT NULL,
-  `seen` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `seen` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `decibel` varchar(45) DEFAULT NULL,
+  `SSID` varchar(45) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping events for database 'WhosHere'
+--
 
 --
 -- Dumping routines for database 'WhosHere'
@@ -76,10 +111,19 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertMac`(IN NewMac VARCHAR(100))
-BEGIN INSERT INTO log(Mac) VALUES(NewMac); END ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertMac`(IN NewMac VARCHAR(100), IN NewDB VARCHAR(100), IN NewSSID VARCHAR(100))
+BEGIN 
+INSERT INTO log(MAC, decibel, SSID) VALUES(NewMac, NewDB, NewSSID); 
+
+IF NOT EXISTS (SELECT * FROM SSIDs WHERE MAC = NewMac AND SSID = NewSSID) THEN
+
+    INSERT INTO SSIDs (MAC, SSID) VALUES(NewMac, NewSSID);
+
+END IF;
+
+END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -112,11 +156,11 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `PurgeLogs`()
 BEGIN
-TRUNCATE TABLE log;
+#TRUNCATE TABLE log;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -169,19 +213,20 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateAssetsLastSeen`()
 BEGIN
 UPDATE assets AS ass
-INNER JOIN (SELECT ass.MAC,MAX(lg.seen) AS LastSeen,TIMESTAMPDIFF(MINUTE,MAX(lg.seen),ass.LastSeen) * -1 AS MinutesSince, COUNT(ass.MAC) AS TimesSeen
+INNER JOIN (SELECT ass.MAC,MAX(lg.seen) AS LastSeen,TIMESTAMPDIFF(MINUTE,MAX(lg.seen),ass.LastSeen) * -1 AS MinutesSince, COUNT(ass.MAC) AS TimesSeen, lg.decibel as Decibel
 FROM assets ass
 INNER JOIN log lg
 on ass.MAC = lg.MAC 
 GROUP BY ass.MAC) AS iq ON iq.MAC = ass.MAC
 SET ass.LastSeen = iq.LastSeen,
 ass.MinutesSince = iq.MinutesSince,
-ass.TimesSeen = ass.TimesSeen + iq.TimesSeen;
+ass.TimesSeen = ass.TimesSeen + iq.TimesSeen,
+ass.SignalStrength = iq.Decibel;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -236,4 +281,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-06 23:53:23
+-- Dump completed on 2017-12-12 20:42:51
