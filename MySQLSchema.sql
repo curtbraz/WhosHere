@@ -177,12 +177,12 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `NotificationLogic`()
 BEGIN
 
-SELECT DISTINCT Nickname,LastSeen,MAC FROM assets ass WHERE Notify = 1 AND LastSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND MinutesSince > 60 AND SignalStrength >= DBTreshold;
+IF  EXISTS (SELECT DISTINCT Nickname,LastSeen,MAC FROM assets ass WHERE Notify = 1 AND LastSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND MinutesSince > 60 AND SignalStrength >= DBTreshold) THEN
+	SELECT DISTINCT Nickname,LastSeen,MAC FROM assets ass WHERE Notify = 1 AND LastSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND MinutesSince > 60 AND SignalStrength >= DBTreshold;
+END IF;
 
 IF  EXISTS (SELECT * FROM config WHERE Name = 'NotifyNewlyDiscovered' AND Value = 'true') THEN
-
-    SELECT DISTINCT Nickname,LastSeen,MAC FROM assets ass WHERE LastSeen = FirstSeen AND LastSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND SignalStrength >= DBTreshold;
-
+    SELECT DISTINCT Nickname,LastSeen,MAC FROM assets ass WHERE TimesSeen < 10 AND SignalStrength >= DBTreshold AND FirstSeen > DATE_SUB(now(), INTERVAL 5 MINUTE);
 END IF;
 
 END ;;
