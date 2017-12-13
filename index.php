@@ -5,26 +5,26 @@
 
 <style type="text/css">
 table.gridtable {
-	font-family: verdana,arial,sans-serif;
-	font-size:10px;
-	color:#333333;
-	border-width: 1px;
-	border-color: #666666;
-	border-collapse: collapse;
+        font-family: verdana,arial,sans-serif;
+        font-size:10px;
+        color:#333333;
+        border-width: 1px;
+        border-color: #666666;
+        border-collapse: collapse;
 }
 table.gridtable th {
-	border-width: 1px;
-	padding: 8px;
-	border-style: solid;
-	border-color: #666666;
-	background-color: #dedede;
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #666666;
+        background-color: #dedede;
 }
 table.gridtable td {
-	border-width: 1px;
-	padding: 8px;
-	border-style: solid;
-	border-color: #666666;
-	background-color: #ffffff;
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #666666;
+        background-color: #ffffff;
 }
 </style>
 
@@ -44,7 +44,7 @@ else
 {echo "(<font color=green>The Collector Service is Running</font>)<br><br>";}
 ?>
 <TABLE class="gridtable">
-<TR><TH>Name</TH><TH>Times Seen</TH><TH>First Seen</TH><TH>Last Seen</TH><TH>Notify</TH><TH>Update</TH></TR>
+<TR><TH>Name</TH><TH>Times Seen</TH><TH>First Seen</TH><TH>Last Seen</TH><TH>Strength</TH><TH>Notify</TH><TH>Update</TH></TR>
 
 <?php
 
@@ -62,7 +62,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
-} 
+}
 
 $Nickname = mysqli_real_escape_string($conn, $Nickname);
 $Notify = mysqli_real_escape_string($conn, $Notify);
@@ -94,6 +94,7 @@ $MAC = $row["MAC"];
 $TimesSeen = $row["TimesSeen"];
 $FirstSeen = $row["FirstSeen"];
 $LastSeen = $row["LastSeen"];
+$SignalStrength = $row["SignalStrength"];
 if($FirstSeen == "0000-00-00 00:00:00"){$FirstSeen = "";}
 
 $FirstSeen = date('m/d/Y h:i:s A', strtotime($FirstSeen));
@@ -107,7 +108,7 @@ $FirstSeen=htmlspecialchars($FirstSeen);
 $LastSeen=htmlspecialchars($LastSeen);
 
 ?>
-<TR><FORM METHOD="POST" ACTION="<?php echo $_SERVER['PHP_SELF']; ?>"><INPUT TYPE="hidden" NAME="asset" VALUE="<?php echo $MAC; ?>"><TD><INPUT TYPE="TEXT" NAME="Nickname" VALUE="<?php echo $Nickname; ?>"></TD><TD ALIGN="CENTER"><?php echo $TimesSeen; ?></TD><TD><?php echo $FirstSeen; ?></TD><TD><?php echo $LastSeen; ?></TD><TD ALIGN="CENTER"><INPUT TYPE="CHECKBOX" NAME="Notify" <?php if($Notify == 1){echo "checked";}else{echo "unchecked";}?>></TD><TD ALIGN="CENTER"><INPUT TYPE="SUBMIT" VALUE="Save"></TD></FORM></TR>
+<TR><FORM METHOD="POST" ACTION="<?php echo $_SERVER['PHP_SELF']; ?>"><INPUT TYPE="hidden" NAME="asset" VALUE="<?php echo $MAC; ?>"><TD><INPUT TYPE="TEXT" NAME="Nickname" VALUE="<?php echo $Nickname; ?>"></TD><TD ALIGN="CENTER"><?php echo $TimesSeen; ?></TD><TD><?php echo $FirstSeen; ?></TD><TD><?php echo $LastSeen; ?></TD><TD><?php echo $SignalStrength; ?></TD><TD ALIGN="CENTER"><INPUT TYPE="CHECKBOX" NAME="Notify" <?php if($Notify == 1){echo "checked";}else{echo "unchecked";}?>></TD><TD ALIGN="CENTER"><INPUT TYPE="SUBMIT" VALUE="Save"></TD></FORM></TR>
 
 <?php
     }
