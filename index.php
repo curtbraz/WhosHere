@@ -44,12 +44,13 @@ else
 {echo "(<font color=green>The Collector Service is Running</font>)<br><br>";}
 ?>
 <TABLE class="gridtable">
-<TR><TH>Name</TH><TH>Times Seen</TH><TH>First Seen</TH><TH>Last Seen</TH><TH>Strength</TH><TH>Notify</TH><TH>Update</TH></TR>
+<TR><TH>Name</TH><TH>Times Seen</TH><TH>First Seen</TH><TH>Last Seen</TH><TH>Strength</TH><TH colspan="2">Notify Treshold</TH><TH>Update</TH></TR>
 
 <?php
 
 if(isset($_POST["asset"])){$asset = $_POST["asset"];}
 if(isset($_POST["Nickname"])){$Nickname = $_POST["Nickname"];}
+if(isset($_POST["DBTreshold"])){$DBTreshold = $_POST["DBTreshold"];}
 if(isset($_POST["Notify"])){$Notify = 1;}else{$Notify = 0;}
 if(isset($_POST["ShowMore"])){$ShowMore = $_POST["ShowMore"];}else{$ShowMore = "No";}
 
@@ -65,11 +66,12 @@ if ($conn->connect_error) {
 }
 
 $Nickname = mysqli_real_escape_string($conn, $Nickname);
+$DBTreshold = mysqli_real_escape_string($conn, $DBTreshold);
 $Notify = mysqli_real_escape_string($conn, $Notify);
 $asset = mysqli_real_escape_string($conn, $asset);
 
 if(isset($asset)){
-$sql = "CALL UpdateAssets('$Nickname','$Notify','$asset');";
+$sql = "CALL UpdateAssets('$Nickname','$Notify','$asset','$DBTreshold');";
 
 $result = $conn->query($sql);
 }
@@ -89,6 +91,7 @@ if ($result->num_rows > 0) {
 //var_dump($row);
 
 $Nickname = $row["Nickname"];
+$DBTreshold = $row["DBTreshold"];
 $Notify = $row["Notify"];
 $MAC = $row["MAC"];
 $TimesSeen = $row["TimesSeen"];
@@ -101,6 +104,7 @@ $FirstSeen = date('m/d/Y h:i:s A', strtotime($FirstSeen));
 $LastSeen = date('m/d/Y h:i:s A', strtotime($LastSeen));
 
 $Nickname=htmlspecialchars($Nickname);
+$DBTreshold=htmlspecialchars($DBTreshold);
 $Notify=htmlspecialchars($Notify);
 $MAC=htmlspecialchars($MAC);
 $TimesSeen=htmlspecialchars($TimesSeen);
@@ -108,7 +112,7 @@ $FirstSeen=htmlspecialchars($FirstSeen);
 $LastSeen=htmlspecialchars($LastSeen);
 
 ?>
-<TR><FORM METHOD="POST" ACTION="<?php echo $_SERVER['PHP_SELF']; ?>"><INPUT TYPE="hidden" NAME="asset" VALUE="<?php echo $MAC; ?>"><TD><INPUT TYPE="TEXT" NAME="Nickname" VALUE="<?php echo $Nickname; ?>"></TD><TD ALIGN="CENTER"><A HREF="assetinfo.php?MAC=<?php echo $MAC; ?>" TARGET="_BLANK"><?php echo $TimesSeen; ?></a></TD><TD><?php echo $FirstSeen; ?></TD><TD><?php echo $LastSeen; ?></TD><TD ALIGN="CENTER"><?php echo $SignalStrength; ?></TD><TD ALIGN="CENTER"><INPUT TYPE="CHECKBOX" NAME="Notify" <?php if($Notify == 1){echo "checked";}else{echo "unchecked";}?>></TD><TD ALIGN="CENTER"><INPUT TYPE="SUBMIT" VALUE="Save"></TD></FORM></TR>
+<TR><FORM METHOD="POST" ACTION="<?php echo $_SERVER['PHP_SELF']; ?>"><INPUT TYPE="hidden" NAME="asset" VALUE="<?php echo $MAC; ?>"><TD><INPUT TYPE="TEXT" NAME="Nickname" VALUE="<?php echo $Nickname; ?>"></TD><TD ALIGN="CENTER"><A HREF="assetinfo.php?MAC=<?php echo $MAC; ?>" TARGET="_BLANK"><?php echo $TimesSeen; ?></a></TD><TD><?php echo $FirstSeen; ?></TD><TD><?php echo $LastSeen; ?></TD><TD ALIGN="CENTER"><?php echo $SignalStrength; ?></TD><TD ALIGN="CENTER"><INPUT TYPE="CHECKBOX" NAME="Notify" <?php if($Notify == 1){echo "checked";}else{echo "unchecked";}?>></TD><TD><INPUT TYPE="TEXT" NAME="DBTreshold" VALUE="<?php echo $DBTreshold; ?>" SIZE="3"></TD><TD ALIGN="CENTER"><INPUT TYPE="SUBMIT" VALUE="Save"></TD></FORM></TR>
 
 <?php
     }
