@@ -290,7 +290,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateSingleAsset`(IN inMAC VARCHAR(100))
 BEGIN
-UPDATE assets SET NotifiedRecently = 0 WHERE LastSeen > DATE_SUB(now(), INTERVAL 60 MINUTE);
+UPDATE assets SET NotifiedRecently = 0 WHERE LastSeen < DATE_SUB(now(), INTERVAL 60 MINUTE);
 UPDATE assets SET LastSeen = NOW(),MinutesSince = 0 WHERE MAC = inMAC;
 END ;;
 DELIMITER ;
