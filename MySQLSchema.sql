@@ -132,7 +132,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `AddAssets`()
 BEGIN
-INSERT INTO assets(Mac,Nickname,FirstSeen) SELECT lg.Mac,lg.Mac,MIN(lg.seen) AS FirstSeen FROM log lg LEFT JOIN assets ass ON ass.Mac = lg.Mac WHERE ass.Mac IS NULL GROUP BY lg.Mac;
+INSERT INTO assets(Mac,Nickname,FirstSeen,SignalStrength) SELECT lg.Mac,lg.Mac,MIN(lg.seen),lg.decibel AS FirstSeen FROM log lg LEFT JOIN assets ass ON ass.Mac = lg.Mac WHERE ass.Mac IS NULL GROUP BY lg.Mac;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
