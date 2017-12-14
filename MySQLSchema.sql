@@ -46,7 +46,7 @@ CREATE TABLE `assets` (
   `TimesSeen` int(11) NOT NULL DEFAULT '0',
   `MinutesSince` int(11) NOT NULL DEFAULT '0',
   `SignalStrength` varchar(45) DEFAULT NULL,
-  `DBTreshold` int(11) NOT NULL DEFAULT '-100',
+  `DBTreshold` int(11) NOT NULL DEFAULT '-70',
   `NotifiedRecently` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -63,21 +63,6 @@ CREATE TABLE `config` (
   `Value` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `config` WRITE;
-/*!40000 ALTER TABLE `config` DISABLE KEYS */;
-INSERT INTO `config` VALUES ('NotifyNewlyDiscovered','false'),('NotifyAfterMinutes','10'),('DefaultNotifyTreshold','-100');
-/*!40000 ALTER TABLE `config` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 --
 -- Table structure for table `log`
@@ -128,7 +113,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `AddAssets`()
 BEGIN
@@ -221,11 +206,13 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `QuickViewAssets`()
 BEGIN
-SELECT * FROM assets ORDER BY LastSeen DESC,TimesSeen DESC LIMIT 50;
+SELECT ass.*,iq.SSIDs FROM assets ass
+LEFT JOIN (SELECT COUNT(SSID) as SSIDs,MAC FROM SSIDs WHERE SSID != "" GROUP BY MAC) iq on iq.MAC = ass.MAC
+ORDER BY ass.LastSeen DESC,ass.TimesSeen DESC LIMIT 50;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -286,7 +273,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateSingleAsset`(IN inMAC VARCHAR(100))
 BEGIN
@@ -306,11 +293,13 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ViewAllAssets`()
 BEGIN
-SELECT * FROM assets ORDER BY LastSeen DESC,TimesSeen DESC;
+SELECT ass.*,iq.SSIDs FROM assets ass
+LEFT JOIN (SELECT COUNT(SSID) as SSIDs,MAC FROM SSIDs WHERE SSID != "" GROUP BY MAC) iq on iq.MAC = ass.MAC
+ORDER BY ass.LastSeen DESC,ass.TimesSeen;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -327,4 +316,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-13 14:40:10
+-- Dump completed on 2017-12-14 12:56:25
