@@ -1,6 +1,5 @@
 <?php
 
-// For IFTTT Integration, Enter Incoming Webhook Here
 $webhook = 'https://maker.ifttt.com/trigger/WhosHere/with/key/IFTTT_WEBHOOK_GOES_HERE';
 
 require_once 'dbconfig.php';
@@ -37,7 +36,9 @@ if ($result->num_rows > 0) {
 $LastSeen = date('h:i:s A', strtotime($row["LastSeen"]));
 
 // SEND NOTIFICATION TO SLACK
-$cmd = "curl -X POST -H 'Content-type: application/json' --data '{\"value1\" : \"".$row["Nickname"]."\", \"value2\" : \"".$LastSeen."\"}' ".$webhook;
+$cmd = "curl -X POST -H 'Content-type: application/json' --data '{\"value1\" : \"".$row["Nickname"]."\", \"value2\" : \"".$LastSeen."\", \"value3\" : \"".$row["SignalStrength"]."\"}' ".$webhook;
+
+echo $cmd."/r/n";
 
 // UPDATES LastSeen FOR THIS ASSET
 // Create connection
@@ -54,8 +55,6 @@ $result1 = $conn2->query($sql1);
 $conn2->close();
 
 exec($cmd);
-
-echo $cmd."\r\n";
 
 }
 }
