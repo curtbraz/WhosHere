@@ -46,7 +46,7 @@ CREATE TABLE `assets` (
   `TimesSeen` int(11) NOT NULL DEFAULT '0',
   `MinutesSince` int(11) NOT NULL DEFAULT '0',
   `SignalStrength` varchar(45) DEFAULT NULL,
-  `DBTreshold` int(11) NOT NULL DEFAULT '-70',
+  `DBTreshold` int(11) NOT NULL DEFAULT '-65',
   `NotifiedRecently` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -163,13 +163,13 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `NotificationLogic`()
 BEGIN
 
-IF  EXISTS (SELECT DISTINCT Nickname,LastSeen,MAC FROM assets ass WHERE Notify = 1 AND LastSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND MinutesSince > 60 AND SignalStrength >= DBTreshold AND NotifiedRecently = 0) THEN
-	SELECT DISTINCT Nickname,LastSeen,MAC FROM assets ass WHERE Notify = 1 AND LastSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND MinutesSince > 60 AND SignalStrength >= DBTreshold AND NotifiedRecently = 0;
+IF  EXISTS (SELECT DISTINCT Nickname,LastSeen,MAC,SignalStrength FROM assets ass WHERE Notify = 1 AND LastSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND MinutesSince > 60 AND SignalStrength >= DBTreshold AND NotifiedRecently = 0) THEN
+	SELECT DISTINCT Nickname,LastSeen,MAC,SignalStrength FROM assets ass WHERE Notify = 1 AND LastSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND MinutesSince > 60 AND SignalStrength >= DBTreshold AND NotifiedRecently = 0;
 	UPDATE assets SET NotifiedRecently = 1 WHERE Notify = 1 AND LastSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND MinutesSince > 60 AND SignalStrength >= DBTreshold AND NotifiedRecently = 0;
 END IF;
 
 IF  EXISTS (SELECT * FROM config WHERE Name = 'NotifyNewlyDiscovered' AND Value = 'true') THEN
-    SELECT DISTINCT Nickname,LastSeen,MAC FROM assets ass WHERE FirstSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND SignalStrength >= DBTreshold AND NotifiedRecently = 0;
+    SELECT DISTINCT Nickname,LastSeen,MAC,SignalStrength FROM assets ass WHERE FirstSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND SignalStrength >= DBTreshold AND NotifiedRecently = 0;
 	UPDATE assets SET NotifiedRecently = 1 WHERE FirstSeen > DATE_SUB(now(), INTERVAL 5 MINUTE) AND SignalStrength >= DBTreshold AND NotifiedRecently = 0;
 END IF;
 
@@ -316,4 +316,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-14 12:56:25
+-- Dump completed on 2017-12-19 23:28:06
