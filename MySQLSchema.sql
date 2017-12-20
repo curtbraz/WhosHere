@@ -70,7 +70,7 @@ CREATE TABLE `config` (
 
 LOCK TABLES `config` WRITE;
 /*!40000 ALTER TABLE `config` DISABLE KEYS */;
-INSERT INTO `config` VALUES ('NotifyNewlyDiscovered','true'),('DefaultNotifyTreshold','-65');
+INSERT INTO `config` VALUES ('NotifyNewlyDiscovered','true'),('DefaultNotifyTreshold','-100');
 /*!40000 ALTER TABLE `config` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
