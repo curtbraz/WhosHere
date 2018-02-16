@@ -6,6 +6,8 @@ The script is named after my dogs, because they proactively alert me before the 
 
 The management is made simple due to an HTML web table that reads the database and allows you to give friendly nicknames to MAC addresses.  There are also first and last seen timestamps that help you determine who someone is that visits, name them appropriately, and enable a notification checkbox to get real-time alerts next time they get close.  I've recently added configuration options for alerting on new devices, alerting on signal strengh (per device), and lookups for unique SSIDs requested per MAC for easier identification. 
 
+UPDATE: This project was first created before MAC Address Randomization was introduced on Android and iOS devices.  Even still, this works for tracking 90% of the devices out there.  In the next release, I want to introduce sending an RTS frame to bypass this so that tracking can work 100% of the time.  However, this script still works well in it's current state as a proximity alarm that you can arm and disarm.
+
 # Requirements
 1) A PC or Raspberry Pi running a Debian OS
 
