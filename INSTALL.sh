@@ -88,7 +88,7 @@ read MySQLPassword;
 
 sed -i -e 's/PASSWORD_GOES_HERE/'$MySQLPassword'/g' run.py;
 
-sed -i -e 's/PASSWORD_GOES_HERE/'$MySQLPassword'/g' dbconfig.py;
+sed -i -e 's/PASSWORD_GOES_HERE/'$MySQLPassword'/g' dbconfig.php;
 
 echo "This script uses IFTTT.com (If Then Then That) Incoming Webhooks for Slack/SMS/etc Notifications/Automation";
 
