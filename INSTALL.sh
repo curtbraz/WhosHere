@@ -155,9 +155,9 @@ sudo crontab cron;
 
 ## INSTALLS SYSTEMD SERVICE
 
-Path='`pwd`'
+Path=`pwd`
 
-sed -i -e 's/CHANGEME/'$Path'/g' whoshere.service;
+sed -i -e "s~CHANGEME~$Path~g" whoshere.service;
 
 sudo cp whoshere.service /lib/systemd/system/whoshere.service;
 
