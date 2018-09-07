@@ -98,7 +98,7 @@ echo "What is your IFTTT.com Webhook URL? (Should look like https://maker.ifttt.
 
 read webhook
 
-sed -i -e 's/IFTTT_WEBHOOK_GOES_HERE/'$webhook'/g' CheckAlerts.php;
+sed -i -e "s~IFTTT_WEBHOOK_GOES_HERE~$webhook~g" CheckAlerts.php;
 
 ## SETS UP APACHE AND COPIES PHP WEB FILES
 
@@ -140,7 +140,7 @@ sudo cp my.cnf /etc/mysql/ && sudo service mysql restart;
 ## IMPORTS MySQL SCHEMA AND STORED PROCEDURES
 
 mysql -u root -p$MySQLPassword -h localhost < MySQLSchema.sql;
-mysql -u root -p$MySQLPassword -e "CREATE USER 'whoshere' IDENTIFIED BY '"$MySQLPassword"';"
+mysql -u root -p$MySQLPassword -e "CREATE USER 'whoshere' IDENTIFIED BY '$MySQLPassword';"
 mysql -u root -p$MySQLPassword -e "GRANT ALL PRIVILEGES ON *.* TO 'whoshere' WITH GRANT OPTION;"
 mysql -u root -p$MySQLPassword -e "FLUSH PRIVILEGES;"
 
