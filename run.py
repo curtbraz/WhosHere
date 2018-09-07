@@ -4,7 +4,7 @@ import pymysql.cursors
 import re
 
 conn = pymysql.connect(host= "localhost",
-                  user="root",
+                  user="whoshere",
                   passwd="PASSWORD_GOES_HERE",
                   db="WhosHere")
 x = conn.cursor()
