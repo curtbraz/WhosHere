@@ -24,9 +24,9 @@ echo "Installing Required Packages.. You Will Have to Create a Database Password
 
 sleep 2;
 
-sudo apt-get install apache2 php mysql-client mysql-server php-mysqlnd python-mysqldb tshark mysql-server python3-pymysql -y;
+sudo apt-get install apache2 php mysql-client mysql-server php-mysqlnd python-mysqldb tshark mysql-server python-pip python3-pymysql -y;
 
-
+pip install pymysql;
 
 ## SETS UP MONITORING WLAN INTERFACE
 
