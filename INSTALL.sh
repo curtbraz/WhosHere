@@ -24,13 +24,15 @@ echo "Installing Required Packages.. You Will Have to Create a Database Password
 
 sleep 2;
 
-sudo apt-get install apache2 php mysql-client mysql-server php-mysqlnd python-mysqldb tshark mysql-server python-pip python3-pymysql -y;
+sudo apt-get install apache2 php mysql-client mysql-server php-mysqlnd python-mysqldb tshark mysql-server python3-pymysql -y;
 
-pip install pymysql;
+
 
 ## SETS UP MONITORING WLAN INTERFACE
 
 echo "Setting Up wlan Interface..  If you Haven't Already, Plug in Your WiFi Adapter Now and Hit Enter to Continue: ";
+
+sed -i -e 's/disable_lua = false/disable_lua = true/g' /usr/share/wireshark/init.lua;
 
 read Wait;
 
