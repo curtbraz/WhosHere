@@ -140,7 +140,7 @@ sudo cp my.cnf /etc/mysql/ && sudo service mysql restart;
 ## IMPORTS MySQL SCHEMA AND STORED PROCEDURES
 
 mysql -u root -p$MySQLPassword -h localhost < MySQLSchema.sql;
-mysql -u root -p$MySQLPassword -e "CREATE USER 'whoshere' IDENTIFIED BY '".$MySQLPassword."';"
+mysql -u root -p$MySQLPassword -e "CREATE USER 'whoshere' IDENTIFIED BY '"$MySQLPassword"';"
 mysql -u root -p$MySQLPassword -e "GRANT ALL PRIVILEGES ON *.* TO 'whoshere' WITH GRANT OPTION;"
 mysql -u root -p$MySQLPassword -e "FLUSH PRIVILEGES;"
 
