@@ -24,7 +24,7 @@ echo "Installing Required Packages.. You Will Have to Create a Database Password
 
 sleep 2;
 
-sudo apt-get install apache2 php5 mysql-client mysql-server-5.5 php5-mysqlnd python-mysqldb tshark mysql-server python3-pymysql -y;
+sudo apt-get install apache2 php mysql-client mysql-server php-mysqlnd python-mysqldb tshark mysql-server python3-pymysql -y;
 
 
 
@@ -39,19 +39,19 @@ InterfaceCount=`iw dev |grep "Interface" |grep -v "mon0" | wc -l`
 
 if [ $InterfaceCount -gt 1 ]
 then
-	echo "Which interface would you like to set up? The following wlan interfaces were detected: "$Interfaces
-	read SelectedInterface
+        echo "Which interface would you like to set up? The following wlan interfaces were detected: "$Interfaces
+        read SelectedInterface
 fi
 
 if [ $InterfaceCount -eq 1 ]
 then
-	SelectedInterface=`iw dev |grep "Interface" |cut -d " " -f 2 |grep -v "mon0"`
+        SelectedInterface=`iw dev |grep "Interface" |cut -d " " -f 2 |grep -v "mon0"`
 fi
 
-if [ $InterfaceCount -eq 0 ]                                   
+if [ $InterfaceCount -eq 0 ]
 then
-	echo "No wireless adapters were detected!  Please ensure the wireless adapter is set up and re-run the Install script."
-	exit 1
+        echo "No wireless adapters were detected!  Please ensure the wireless adapter is set up and re-run the Install script."
+        exit 1
 fi
 
 if [ `iw dev |grep "Interface" |cut -d " " -f 2 |grep "mon0" | wc -l` -gt 0 ]
@@ -68,10 +68,10 @@ PhyDev="`iw dev |grep "$SelectedInterface" -B 1 |grep phy | sed 's/#//g'`"
 
 PhyDevMonitorCheck="`iw "$PhyDev" info |grep monitor | wc -l`"
 
-if [ $PhyDevMonitorCheck -eq 0 ]                                   
+if [ $PhyDevMonitorCheck -eq 0 ]
 then
         echo "Error! "$SelectedInterface" does not support monitor mode.  Is it possible the proper drivers are not installed for this Distribution or your wireless card simply does not support monitor mode?"
-        exit 1                
+        exit 1
 fi
 
 
