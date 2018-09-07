@@ -137,7 +137,7 @@ sudo cp my.cnf /etc/mysql/ && sudo service mysql restart;
 
 ## IMPORTS MySQL SCHEMA AND STORED PROCEDURES
 
-mysql -u root -p $MySQLPassword WhosHere < MySQLSchema.sql;
+mysql -u root -p$MySQLPassword -h localhost < MySQLSchema.sql;
 
 
 ## SETS UP CRON JOBS
