@@ -1,3 +1,4 @@
+#!/usr/bin/python
 #Server Connection to MySQL:
 
 import pymysql.cursors
