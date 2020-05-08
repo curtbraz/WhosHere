@@ -19,7 +19,7 @@ MonMode2 = subprocess.Popen(['sudo','ifconfig','mon0','up'],stdout=subprocess.PI
 ## CALLS TSHARK AND FILTERS FOR PROBE REQUESTS
 ## /usr/bin/tshark -i mon0 -Y 'wlan.fc.type_subtype eq 4' -l
 ## /usr/bin/tshark -l -i mon0 -Y 'wlan.fc.type_subtype eq 4' -T fields -e wlan.sa -e radiotap.dbm_antsignal -e wlan_mgt.ssid
-proc = subprocess.Popen(['/usr/bin/tshark','-l','-i','mon0','-Y','wlan.fc.type_subtype eq 4','-T','fields','-e','wlan.sa_resolved','-e','radiotap.dbm_antsignal','-e','wlan_mgt.ssid'],stdout=subprocess.PIPE)
+proc = subprocess.Popen(['/usr/bin/tshark','-l','-i','mon0','-Y','wlan.fc.type_subtype eq 4','-T','fields','-e','wlan.sa_resolved','-e','radiotap.dbm_antsignal','-e','wlan.ssid'],stdout=subprocess.PIPE)
 #proc = subprocess.Popen(['/usr/bin/tshark','-i','mon0','-Y','wlan.fc.type_subtype eq 4','-l'],stdout=subprocess.PIPE)
 #while True:
 #  line = proc.stdout.readline()
