@@ -1,6 +1,6 @@
 <?php
 
-$webhook = 'https://maker.ifttt.com/trigger/WhosHere/with/key/IFTTT_WEBHOOK_GOES_HERE';
+$webhook = 'IFTTT_WEBHOOK_GOES_HERE';
 
 require_once 'dbconfig.php';
 
