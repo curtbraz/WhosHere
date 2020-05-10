@@ -1,18 +1,18 @@
 # WhosHere SCRIPTS BELOW
 # SCRIPTS BELOW ARE FOR SENDING ALERTS EVERY 5 SECONDS
-* * * * * php /var/www/html/WhosHere/CheckAlerts.php
-* * * * * sleep 5; php /var/www/html/WhosHere/CheckAlerts.php
-* * * * * sleep 10; php /var/www/html/WhosHere/CheckAlerts.php
-* * * * * sleep 15; php /var/www/html/WhosHere/CheckAlerts.php
-* * * * * sleep 20; php /var/www/html/WhosHere/CheckAlerts.php
-* * * * * sleep 25; php /var/www/html/WhosHere/CheckAlerts.php
-* * * * * sleep 30; php /var/www/html/WhosHere/CheckAlerts.php
-* * * * * sleep 35; php /var/www/html/WhosHere/CheckAlerts.php
-* * * * * sleep 40; php /var/www/html/WhosHere/CheckAlerts.php
-* * * * * sleep 45; php /var/www/html/WhosHere/CheckAlerts.php
-* * * * * sleep 50; php /var/www/html/WhosHere/CheckAlerts.php
-* * * * * sleep 55; php /var/www/html/WhosHere/CheckAlerts.php
+* * * * * php /home/pi/WhosHere/CheckAlerts.php
+* * * * * sleep 5; php /home/pi/WhosHere/CheckAlerts.php
+* * * * * sleep 10; php /home/pi/WhosHere/CheckAlerts.php
+* * * * * sleep 15; php /home/pi/WhosHere/CheckAlerts.php
+* * * * * sleep 20; php /home/pi/WhosHere/CheckAlerts.php
+* * * * * sleep 25; php /home/pi/WhosHere/CheckAlerts.php
+* * * * * sleep 30; php /home/pi/WhosHere/CheckAlerts.php
+* * * * * sleep 35; php /home/pi/WhosHere/CheckAlerts.php
+* * * * * sleep 40; php /home/pi/WhosHere/CheckAlerts.php
+* * * * * sleep 45; php /home/pi/WhosHere/CheckAlerts.php
+* * * * * sleep 50; php /home/pi/WhosHere/CheckAlerts.php
+* * * * * sleep 55; php /home/pi/WhosHere/CheckAlerts.php
 
 # SCRIPT BELOW PERFORMS DATABASE MAINTENANCE EVERY DAY @ 3
-0 3 * * * php /var/www/html/WhosHere/DBMaintenance.php
+0 3 * * * php /home/pi/WhosHere/DBMaintenance.php
 
