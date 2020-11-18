@@ -143,7 +143,7 @@ sudo cp my.cnf /etc/mysql/ && sudo service mysql restart;
 mysql -u root -p$MySQLPassword -h localhost < MySQLSchema.sql;
 mysql -u root -p$MySQLPassword -e "CREATE USER 'whoshere' IDENTIFIED BY '$MySQLPassword';"
 mysql -u root -p$MySQLPassword -e "GRANT ALL PRIVILEGES ON *.* TO 'whoshere' WITH GRANT OPTION;"
-mysql -u root -p$MySQLPassword -e "root'@'localhost' IDENTIFIED WITH mysql_native_password BY '$MySQLPassword';"
+mysql -u root -p$MySQLPassword -e "'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '$MySQLPassword';"
 mysql -u root -p$MySQLPassword -e "FLUSH PRIVILEGES;"
 
 ## SETS UP CRON JOBS
